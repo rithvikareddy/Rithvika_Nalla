@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rithvika Reddy Nalla — AI/ML Product Owner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #06070d;
+  --surface: #0e1018;
+  --card: #13151f;
+  --border: rgba(255,255,255,.07);
+  --text: #e8eaf0;
+  --muted: #6b7080;
+  --accent: #4f8ef7;
+  --accent2: #7c5cfc;
+  --gold: #f0b429;
+  --green: #34d399;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: .4;
+}
+
+/* LOADER */
+.loader {
+  position: fixed; inset: 0; background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9998; transition: opacity .7s ease, visibility .7s ease;
+}
+.loader.done { opacity: 0; visibility: hidden; }
+.loader-inner { text-align: center; }
+.loader-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+.loader-bar {
+  width: 200px; height: 2px;
+  background: var(--border);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loader-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  animation: load 1s ease forwards;
+}
+@keyframes load { from{width:0} to{width:100%} }
+@keyframes shimmer { 0%,100%{opacity:.6} 50%{opacity:1} }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  padding: 1.1rem 5vw;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(6,7,13,.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -.01em;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: .78rem; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 5vw 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(120px); opacity: .25;
+}
+.orb1 { width: 600px; height: 600px; background: var(--accent2); top: -200px; right: -100px; }
+.orb2 { width: 400px; height: 400px; background: var(--accent); bottom: -100px; left: 10%; }
+
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(79,142,247,.1);
+  border: 1px solid rgba(79,142,247,.25);
+  border-radius: 30px;
+  padding: .4rem 1rem;
+  font-size: .75rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp .6s .3s ease forwards;
+}
+.hero-badge::before { content: '●'; font-size: .4rem; animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 1.0;
+  letter-spacing: -.04em;
+  margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp .8s .45s ease forwards;
+}
+.hero h1 .name-first { display: block; color: var(--text); }
+.hero h1 .name-last {
+  display: block;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  color: var(--muted);
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp .8s .6s ease forwards;
+}
+.hero-sub strong { color: var(--text); font-weight: 500; }
+
+.hero-stats {
+  display: flex; gap: 2.5rem; flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp .8s .75s ease forwards;
+}
+.stat { border-left: 2px solid var(--accent); padding-left: 1rem; }
+.stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; line-height: 1;
+  color: var(--text);
+}
+.stat-lbl { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+
+.hero-cta {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .8s .9s ease forwards;
+}
+.btn {
+  padding: .8rem 2rem; border-radius: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .9rem; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  transition: all .25s; display: inline-block; border: none;
+}
+.btn-glow {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  box-shadow: 0 0 30px rgba(79,142,247,.3);
+}
+.btn-glow:hover { transform: translateY(-2px); box-shadow: 0 0 45px rgba(79,142,247,.5); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
+
+/* SECTIONS */
+section { padding: 7rem 5vw; }
+.section-eyebrow {
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: .6rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  letter-spacing: -.03em; line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+/* ABOUT */
+#about { background: var(--surface); }
+.about-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 5vw; align-items: start;
+  margin-top: 3rem;
+}
+.about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1rem; }
+.about-text p strong { color: var(--text); font-weight: 500; }
+
+.certs {
+  display: flex; flex-direction: column; gap: .75rem;
+  margin-top: 1.5rem;
+}
+.cert-item {
+  display: flex; align-items: center; gap: .75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: .75rem 1.1rem;
+  font-size: .88rem; font-weight: 500;
+}
+.cert-icon {
+  width: 32px; height: 32px; border-radius: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem; color: #fff; font-weight: 700; flex-shrink: 0;
+}
+
+.skills-section { margin-top: 2.5rem; }
+.skills-label { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .75rem; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
+.stag {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: .35rem .8rem;
+  font-size: .78rem; color: var(--text);
+  transition: border-color .2s;
+}
+.stag:hover { border-color: var(--accent); color: var(--accent); }
+
+/* EXPERIENCE */
+#experience { background: var(--bg); }
+.exp-grid { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+.exp-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s, transform .3s;
+}
+.exp-card:hover { border-color: rgba(79,142,247,.3); transform: translateX(4px); }
+.exp-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent), var(--accent2));
+}
+.exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; }
+.exp-role {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem; letter-spacing: -.02em;
+}
+.exp-company { color: var(--accent); font-size: .9rem; font-weight: 500; margin-top: .2rem; }
+.exp-date {
+  background: rgba(79,142,247,.1);
+  border: 1px solid rgba(79,142,247,.2);
+  border-radius: 20px;
+  padding: .3rem .9rem;
+  font-size: .75rem; font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.exp-bullets { list-style: none; }
+.exp-bullets li {
+  padding: .4rem 0;
+  color: var(--muted);
+  font-size: .92rem;
+  padding-left: 1.2rem;
+  position: relative;
+}
+.exp-bullets li::before {
+  content: '→';
+  position: absolute; left: 0;
+  color: var(--accent); font-size: .8rem;
+}
+.exp-bullets li strong { color: var(--text); font-weight: 500; }
+.exp-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.25rem; }
+.etag {
+  background: rgba(124,92,252,.1);
+  border: 1px solid rgba(124,92,252,.2);
+  color: var(--accent2);
+  border-radius: 4px;
+  padding: .25rem .7rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+}
+
+/* IMPACT */
+#impact { background: var(--surface); }
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+  margin-top: 3rem;
+}
+.impact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform .3s, border-color .3s;
+}
+.impact-card:hover { transform: translateY(-6px); border-color: rgba(79,142,247,.3); }
+.impact-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem; line-height: 1;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: .5rem;
+}
+.impact-desc { font-size: .85rem; color: var(--muted); }
+
+/* SKILLS DEEP DIVE */
+#skills { background: var(--bg); }
+.skills-deep-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-top: 3rem;
+}
+.skill-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.75rem;
+}
+.skill-block-title {
+  font-size: .75rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1rem;
+}
+.skill-list { display: flex; flex-wrap: wrap; gap: .4rem; }
+.sk { font-size: .8rem; color: var(--muted); background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 4px; padding: .3rem .7rem; }
+
+/* RESUME */
+#resume { background: var(--surface); }
+.resume-panel {
+  margin-top: 3rem;
+  background: linear-gradient(135deg, rgba(79,142,247,.08), rgba(124,92,252,.08));
+  border: 1px solid rgba(79,142,247,.2);
+  border-radius: 16px;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.resume-panel h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; letter-spacing: -.02em;
+  margin-bottom: .5rem;
+}
+.resume-panel p { color: var(--muted); max-width: 480px; }
+.resume-meta { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.rmeta { font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.rmeta span { color: var(--text); }
+
+/* CONTACT */
+#contact { background: var(--bg); text-align: center; }
+.contact-email {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3.5vw, 3rem);
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -.03em;
+  margin: 2rem 0;
+  position: relative;
+}
+.contact-email::after {
+  content: '';
+  position: absolute; left: 0; bottom: -4px; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 2px;
+}
+.contact-email:hover { opacity: .8; }
+.contact-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.contact-links a {
+  font-size: .8rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  transition: color .2s;
+}
+.contact-links a:hover { color: var(--accent); }
+
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  text-align: center; padding: 1.5rem;
+  font-size: .78rem; color: var(--muted);
+}
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media(max-width:860px) {
+  .about-layout { grid-template-columns: 1fr; }
+  .exp-header { flex-direction: column; }
+  .resume-panel { flex-direction: column; }
+  .hero-stats { gap: 1.5rem; }
+  .nav-links { gap: 1rem; }
+}
+@media(max-width:600px) {
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-name">Rithvika Nalla</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Rithvika<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#resume">Résumé</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">AI/ML Product Owner · Open to Opportunities</div>
+    <h1>
+      <span class="name-first">Rithvika Reddy</span>
+      <span class="name-last">Nalla</span>
+    </h1>
+    <p class="hero-sub">
+      <strong>5+ years</strong> delivering enterprise AI/ML platforms across healthcare and aviation.
+      I turn complex ML capabilities into products that create <strong>measurable business impact</strong>.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-val">$1M+</div>
+        <div class="stat-lbl">Business impact delivered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">1M+</div>
+        <div class="stat-lbl">Members served</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">15%</div>
+        <div class="stat-lbl">ML accuracy lift</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">20%</div>
+        <div class="stat-lbl">Faster release cycles</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-glow" href="#experience">View Experience</a>
+      <a class="btn btn-ghost" href="#resume">Download Résumé</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-eyebrow reveal">About</p>
+  <h2 class="section-title reveal">Product Owner at the intersection of<br><em style="font-style:italic">AI, data, and delivery</em></h2>
+  <div class="about-layout">
+    <div class="about-text reveal">
+      <p>I'm a Technical Product Owner based in <strong>Irvine, CA</strong>, with a track record of shipping AI and ML-powered platforms in high-stakes industries — healthcare and commercial aviation. I bridge the gap between what data scientists build and what business stakeholders actually need.</p>
+      <p>My edge is in <strong>translating complex ML behavior into clear, testable acceptance criteria</strong> that engineering and QA teams can act on — without losing the nuance that makes models actually perform in production.</p>
+      <p>I hold an MS in Computer Science from the University of North Texas and bring a rare combination of technical fluency (SQL, AWS, Databricks) and Agile product leadership to every team I join.</p>
+      <div class="certs">
+        <div class="cert-item">
+          <div class="cert-icon">DB</div>
+          Databricks Data Engineer Professional
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">CS</div>
+          Certified Scrum Product Owner (CSPO)
+        </div>
+      </div>
+    </div>
+    <div class="skills-section reveal">
+      <div class="skills-label">AI & Cloud</div>
+      <div class="skill-tags">
+        <span class="stag">Prompt Engineering</span>
+        <span class="stag">Microsoft Copilot</span>
+        <span class="stag">Amazon Q</span>
+        <span class="stag">Generative AI / LLMs</span>
+        <span class="stag">AWS SageMaker</span>
+        <span class="stag">AWS S3 · SES · CloudWatch</span>
+        <span class="stag">Databricks</span>
+        <span class="stag">Salesforce</span>
+      </div>
+      <div class="skills-label">Product & Agile</div>
+      <div class="skill-tags">
+        <span class="stag">Backlog Management</span>
+        <span class="stag">Sprint & PI Planning</span>
+        <span class="stag">UAT</span>
+        <span class="stag">KPI Optimization</span>
+        <span class="stag">Release Planning</span>
+        <span class="stag">Regulatory Compliance</span>
+        <span class="stag">OKR Setting</span>
+        <span class="stag">A/B Testing</span>
+      </div>
+      <div class="skills-label">Tools</div>
+      <div class="skill-tags">
+        <span class="stag">Jira</span>
+        <span class="stag">Azure DevOps</span>
+        <span class="stag">Confluence</span>
+        <span class="stag">Figma</span>
+        <span class="stag">SQL</span>
+        <span class="stag">APIs / Middleware</span>
+        <span class="stag">Digital.ai</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-eyebrow reveal">Career</p>
+  <h2 class="section-title reveal">Where I've shipped</h2>
+  <div class="exp-grid">
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Technical Product Owner</div>
+          <div class="exp-company">Zaven IT / Delta Airlines</div>
+        </div>
+        <div class="exp-date">Apr 2025 – Present</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Owned product vision and backlog for a <strong>predictive ML pilot-demand engine</strong>; defined Product Goal, authored epics and acceptance criteria, driving <strong>$1M in annual cost savings</strong> by reducing short-call reserve inefficiencies.</li>
+        <li>Designed reusable prompt templates with <strong>Microsoft Copilot and Amazon Q</strong> to generate well-formed epics and functional specs, cutting story-writing cycle time.</li>
+        <li>Partnered with MLOps and Data Engineering to define <strong>ETL/ELT pipeline requirements</strong> for AWS SageMaker model training and deployment.</li>
+        <li>Collaborated with UX in <strong>Figma</strong> to translate stakeholder requirements into wireframes for a model monitoring web application.</li>
+        <li>Established stakeholder communication cadence across engineering, business, and senior leadership achieving <strong>high stakeholder satisfaction</strong>.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="etag">ML / Predictive</span>
+        <span class="etag">AWS SageMaker</span>
+        <span class="etag">Prompt Engineering</span>
+        <span class="etag">SAFe</span>
+        <span class="etag">Figma</span>
+      </div>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Technical Product Owner</div>
+          <div class="exp-company">Zaven IT / Aetna</div>
+        </div>
+        <div class="exp-date">Feb 2023 – Mar 2025</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Led product scope, roadmap, and MVP delivery for an <strong>ML-driven personalization platform serving 1M+ insurance members</strong>; defined KPIs and monitored post-launch performance.</li>
+        <li>Authored acceptance criteria for AI/ML features in <strong>Azure DevOps</strong>, ensuring all stories met Definition of Ready before sprint kickoff.</li>
+        <li>Diagnosed underperforming member segments post-launch; re-sequenced Databricks model retraining backlog and validated fixes with <strong>A/B testing — lifting model accuracy by 15%</strong> over five sprints.</li>
+        <li>Directed sprint execution achieving a <strong>20% faster release cycle</strong> than prior timelines.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="etag">ML Personalization</span>
+        <span class="etag">Azure DevOps</span>
+        <span class="etag">Databricks</span>
+        <span class="etag">Healthcare</span>
+        <span class="etag">A/B Testing</span>
+      </div>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Associate Product Owner</div>
+          <div class="exp-company">Adret Infotech</div>
+        </div>
+        <div class="exp-date">Aug 2019 – Jul 2021</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Set Product Goal as <strong>'self-serve real-time data for every business unit'</strong> on AWS and Databricks; prioritized pipeline reliability, reaching <strong>90% data availability</strong>.</li>
+        <li>Partnered with sales ops and engineering to identify workflow gaps in Salesforce and implement reporting enhancements improving <strong>sales productivity and data transparency</strong>.</li>
+        <li>Ran Sprint Reviews as UAT sessions; triaged defects by impact, <strong>cutting post-release bug fixes by ~40%</strong>.</li>
+        <li>Defined requirements for <strong>Tableau and Power BI dashboards</strong> with automated monitoring — improved operational visibility by 40% and prevented two costly redesigns.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="etag">AWS</span>
+        <span class="etag">Databricks</span>
+        <span class="etag">Salesforce</span>
+        <span class="etag">Tableau</span>
+        <span class="etag">Power BI</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <p class="section-eyebrow reveal">By the Numbers</p>
+  <h2 class="section-title reveal">Measurable results, every time</h2>
+  <div class="impact-grid">
+    <div class="impact-card reveal">
+      <div class="impact-num">$1M+</div>
+      <div class="impact-desc">Annual cost savings delivered via ML pilot-demand engine at Delta Airlines</div>
+    </div>
+    <div class="impact-card reveal">
+      <div class="impact-num">1M+</div>
+      <div class="impact-desc">Insurance members served by personalization platform at Aetna</div>
+    </div>
+    <div class="impact-card reveal">
+      <div class="impact-num">+15%</div>
+      <div class="impact-desc">ML model accuracy improvement through A/B-tested retraining backlog</div>
+    </div>
+    <div class="impact-card reveal">
+      <div class="impact-num">20%</div>
+      <div class="impact-desc">Faster release cycle than prior timelines at Aetna</div>
+    </div>
+    <div class="impact-card reveal">
+      <div class="impact-num">~40%</div>
+      <div class="impact-desc">Reduction in post-release bug fixes via UAT-first sprint reviews</div>
+    </div>
+    <div class="impact-card reveal">
+      <div class="impact-num">90%</div>
+      <div class="impact-desc">Data pipeline availability achieved for self-serve analytics platform</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS DEEP DIVE -->
+<section id="skills">
+  <p class="section-eyebrow reveal">Technical Depth</p>
+  <h2 class="section-title reveal">Built to speak both sides</h2>
+  <div class="skills-deep-grid">
+    <div class="skill-block reveal">
+      <div class="skill-block-title">AI & Generative AI</div>
+      <div class="skill-list">
+        <span class="sk">Prompt Engineering</span>
+        <span class="sk">LLMs</span>
+        <span class="sk">Microsoft Copilot</span>
+        <span class="sk">Amazon Q for Business</span>
+        <span class="sk">Model Output Validation</span>
+        <span class="sk">Agentic AI</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-block-title">Cloud & Data Platforms</div>
+      <div class="skill-list">
+        <span class="sk">AWS SageMaker</span>
+        <span class="sk">AWS S3</span>
+        <span class="sk">AWS SES</span>
+        <span class="sk">CloudWatch</span>
+        <span class="sk">Databricks</span>
+        <span class="sk">Azure DevOps</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-block-title">Product & Agile</div>
+      <div class="skill-list">
+        <span class="sk">Backlog Management</span>
+        <span class="sk">PI Planning</span>
+        <span class="sk">Sprint Planning</span>
+        <span class="sk">KPI Definition</span>
+        <span class="sk">Release Planning</span>
+        <span class="sk">Regulatory Compliance</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-block-title">Tools & Delivery</div>
+      <div class="skill-list">
+        <span class="sk">Jira</span>
+        <span class="sk">Confluence</span>
+        <span class="sk">Figma</span>
+        <span class="sk">Salesforce</span>
+        <span class="sk">SQL</span>
+        <span class="sk">APIs / Middleware</span>
+        <span class="sk">Digital.ai</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <p class="section-eyebrow reveal">Résumé</p>
+  <h2 class="section-title reveal">The full picture</h2>
+  <div class="resume-panel reveal">
+    <div>
+      <h3>Rithvika Reddy Nalla</h3>
+      <p>AI/ML Technical Product Owner with 5+ years in healthcare and aviation. Includes full work history, certifications (CSPO, Databricks), education, and tools.</p>
+      <div class="resume-meta">
+        <span class="rmeta">Location <span>Irvine, CA</span></span>
+        <span class="rmeta">Phone <span>940-297-7191</span></span>
+        <span class="rmeta">Format <span>PDF</span></span>
+      </div>
+    </div>
+    <a class="btn btn-glow" href="rithvikareddynalla_AIML_PO.pdf" download>Download PDF ↓</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-eyebrow reveal">Let's Connect</p>
+  <h2 class="section-title reveal">Open to new opportunities</h2>
+  <a class="contact-email reveal" href="mailto:rithvikareddynalla@gmail.com">rithvikareddynalla@gmail.com</a>
+  <div class="contact-links reveal">
+    <a href="https://www.linkedin.com/in/rithvika-reddy-nalla" target="_blank">LinkedIn</a>
+    <a href="tel:9402977191">940-297-7191</a>
+  </div>
+</section>
+
+<footer>© 2026 Rithvika Reddy Nalla · AI/ML Product Owner · Irvine, CA</footer>
+
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('loader').classList.add('done'), 1100);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
