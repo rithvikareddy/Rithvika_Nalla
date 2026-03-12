@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rithvika Reddy Nalla — Product & Analytics Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0d;
+    --paper: #f5f2ec;
+    --warm: #f0ebe0;
+    --accent: #c84b2f;
+    --accent2: #1a4a6b;
+    --muted: #7a756e;
+    --border: #d8d2c8;
+    --card: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(245,242,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 120px 48px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; letter-spacing: 0.12em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--accent);
+  }
+  .hero-desc {
+    font-size: 18px; color: var(--muted); line-height: 1.7;
+    max-width: 420px; margin-bottom: 40px;
+  }
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--ink); color: var(--paper);
+    padding: 14px 28px; border-radius: 4px;
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-outline {
+    border: 1.5px solid var(--border); color: var(--ink);
+    padding: 14px 28px; border-radius: 4px;
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    transition: border-color 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+  .hero-right {
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    display: flex; align-items: center; gap: 24px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 44px; line-height: 1;
+    color: var(--accent); flex-shrink: 0;
+  }
+  .stat-label { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .stat-label strong { display: block; font-size: 16px; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
+
+  /* ROLES STRIP */
+  .roles-strip {
+    background: var(--ink);
+    overflow: hidden;
+    padding: 18px 0;
+    white-space: nowrap;
+  }
+  .roles-inner {
+    display: inline-flex; gap: 0;
+    animation: marquee 24s linear infinite;
+  }
+  .roles-inner span {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px; letter-spacing: 0.08em;
+    color: var(--paper); opacity: 0.6;
+    padding: 0 32px;
+  }
+  .roles-inner span.accent { color: var(--accent); opacity: 1; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTIONS COMMON */
+  section { padding: 96px 48px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.14em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.1; letter-spacing: -1px;
+    margin-bottom: 56px;
+  }
+
+  /* CASE STUDY */
+  .case-study {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .cs-header {
+    background: var(--ink);
+    padding: 48px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cs-header::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .cs-header::after {
+    content: '';
+    position: absolute; top: 20px; right: 20px;
+    width: 140px; height: 140px;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+  .cs-company {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px;
+  }
+  .cs-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px; color: white;
+    line-height: 1.15; letter-spacing: -0.5px;
+    margin-bottom: 20px; max-width: 560px;
+  }
+  .cs-meta {
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .cs-tag {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 500;
+  }
+  .cs-body {
+    padding: 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+  .cs-section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 14px;
+  }
+  .cs-text { font-size: 15px; color: #3a3632; line-height: 1.75; }
+  .cs-text p { margin-bottom: 14px; }
+  .cs-text p:last-child { margin-bottom: 0; }
+
+  .cs-outcomes {
+    grid-column: 1 / -1;
+    background: var(--warm);
+    border-radius: 12px;
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .outcome-item { text-align: center; }
+  .outcome-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px; color: var(--accent);
+    line-height: 1; margin-bottom: 8px;
+  }
+  .outcome-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .outcome-desc strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+
+  .cs-approach {
+    grid-column: 1 / -1;
+  }
+  .approach-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    margin-top: 20px;
+  }
+  .step {
+    background: var(--warm);
+    border-radius: 10px; padding: 24px 20px;
+    border-left: 3px solid var(--accent);
+  }
+  .step-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .step-title { font-weight: 500; font-size: 14px; margin-bottom: 6px; }
+  .step-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* SKILLS */
+  .skills-section { background: var(--warm); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+  .skill-icon {
+    width: 40px; height: 40px;
+    background: var(--ink); border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .skill-icon svg { width: 20px; height: 20px; fill: var(--paper); }
+  .skill-card h3 { font-size: 16px; font-weight: 500; margin-bottom: 10px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .skill-tag {
+    font-size: 12px; padding: 4px 10px;
+    background: var(--warm); border-radius: 100px;
+    color: var(--muted);
+  }
+
+  /* EXPERIENCE TIMELINE */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 48px;
+  }
+  .timeline-item::before {
+    content: ''; position: absolute;
+    left: -36px; top: 8px;
+    width: 9px; height: 9px;
+    border-radius: 50%; background: var(--accent);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .tl-period {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.08em;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .tl-role { font-weight: 500; font-size: 17px; margin-bottom: 2px; }
+  .tl-company { color: var(--accent); font-size: 14px; margin-bottom: 10px; }
+  .tl-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+  }
+  .contact-section .section-label { color: var(--accent); }
+  .contact-section .section-title { color: var(--paper); margin-bottom: 20px; }
+  .contact-desc { color: rgba(245,242,236,0.6); max-width: 500px; margin: 0 auto 40px; }
+  .contact-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+  .contact-link {
+    padding: 14px 32px;
+    border: 1.5px solid rgba(245,242,236,0.2);
+    border-radius: 4px; color: var(--paper);
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); background: rgba(200,75,47,0.12); }
+  .contact-link.primary {
+    background: var(--accent); border-color: var(--accent);
+  }
+  .contact-link.primary:hover { background: #a83b22; border-color: #a83b22; }
+
+  /* FADE IN */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; }
+    .cs-body { grid-template-columns: 1fr; padding: 32px; gap: 32px; }
+    .cs-outcomes { grid-template-columns: 1fr; }
+    .approach-steps { grid-template-columns: 1fr 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    section { padding: 64px 24px; }
+    .cs-header { padding: 36px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Rithvika Reddy Nalla</div>
+  <div class="nav-links">
+    <a href="#case-study">Case Study</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="padding-top: 0; padding-bottom: 0;">
+  <div class="hero">
+    <div class="hero-left fade-in">
+      <div class="hero-eyebrow">Senior BA · AI Product Manager · Product Owner</div>
+      <h1>Product thinking.<br><em>Analytical</em><br>precision.</h1>
+      <p class="hero-desc">6+ years driving AI product roadmaps, claims modernization, and data-backed decisions across aviation, healthcare, and banking.</p>
+      <div class="hero-cta">
+        <a href="#case-study" class="btn-primary">View Case Study</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-right fade-in" style="transition-delay: 0.15s;">
+      <div class="stat-card">
+        <div class="stat-num">$1M</div>
+        <div class="stat-label">
+          <strong>FY2025 cost savings</strong>
+          Delta Air Lines — AI reserve demand prediction
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">67%</div>
+        <div class="stat-label">
+          <strong>Next-day reserve coverage</strong>
+          Up from 41% in 2 quarters post-launch
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">38%</div>
+        <div class="stat-label">
+          <strong>Faster claims processing</strong>
+          Aetna — 3.2M+ claims/month modernization
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="roles-strip">
+  <div class="roles-inner">
+    <span class="accent">AI Product Manager</span>
+    <span>·</span>
+    <span>Senior Business Analyst</span>
+    <span>·</span>
+    <span class="accent">Product Owner</span>
+    <span>·</span>
+    <span>ML Model Lifecycle</span>
+    <span>·</span>
+    <span class="accent">Power BI · Tableau</span>
+    <span>·</span>
+    <span>Agile / SAFe</span>
+    <span>·</span>
+    <span class="accent">AWS SageMaker</span>
+    <span>·</span>
+    <span>Requirements Engineering</span>
+    <span>·</span>
+    <span class="accent">A/B Experimentation</span>
+    <span>·</span>
+    <span>SQL Analysis</span>
+    <span>·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="accent">AI Product Manager</span>
+    <span>·</span>
+    <span>Senior Business Analyst</span>
+    <span>·</span>
+    <span class="accent">Product Owner</span>
+    <span>·</span>
+    <span>ML Model Lifecycle</span>
+    <span>·</span>
+    <span class="accent">Power BI · Tableau</span>
+    <span>·</span>
+    <span>Agile / SAFe</span>
+    <span>·</span>
+    <span class="accent">AWS SageMaker</span>
+    <span>·</span>
+    <span>Requirements Engineering</span>
+    <span>·</span>
+    <span class="accent">A/B Experimentation</span>
+    <span>·</span>
+    <span>SQL Analysis</span>
+    <span>·</span>
+  </div>
+</div>
+
+<!-- CASE STUDY -->
+<section id="case-study">
+  <div class="section-inner">
+    <div class="section-label fade-in">Featured Case Study</div>
+    <h2 class="section-title fade-in">AI Reserve Demand<br>Prediction Platform</h2>
+
+    <div class="case-study fade-in">
+      <div class="cs-header">
+        <div class="cs-company">Delta Air Lines · Apr 2025 – Present</div>
+        <div class="cs-title">How I owned the AI product roadmap that saved Delta $1M in pilot reserve costs</div>
+        <div class="cs-meta">
+          <span class="cs-tag">AI / ML Product</span>
+          <span class="cs-tag">Product Owner</span>
+          <span class="cs-tag">AWS SageMaker</span>
+          <span class="cs-tag">Crew Operations</span>
+          <span class="cs-tag">A/B Testing</span>
+        </div>
+      </div>
+
+      <div class="cs-body">
+
+        <!-- Problem -->
+        <div>
+          <div class="cs-section-title">The Problem</div>
+          <div class="cs-text">
+            <p>Delta's crew ops team had no reliable way to predict next-day pilot reserve demand. Schedulers defaulted to conservative over-allocation, triggering unnecessary Green Slip premium activations.</p>
+            <p>With next-day reserve coverage sitting at just 41%, the cost exposure was significant enough to warrant an AI-driven solution — but only if the model could meet FAA regulatory requirements and collective bargaining constraints simultaneously.</p>
+          </div>
+        </div>
+
+        <!-- Constraints -->
+        <div>
+          <div class="cs-section-title">Key Constraints</div>
+          <div class="cs-text">
+            <p>The solution had to operate within FAA regulations governing pilot scheduling and adhere strictly to collective bargaining agreement constraints — leaving no room for model errors that violated labor rules.</p>
+            <p>Latency was non-negotiable: demand forecasting outputs needed to be delivered under 300ms to support real-time crew scheduling decisions. Any regression in model accuracy during iterative updates required zero-downtime rollback protocols.</p>
+          </div>
+        </div>
+
+        <!-- Approach -->
+        <div class="cs-approach">
+          <div class="cs-section-title">My Approach</div>
+          <div class="approach-steps">
+            <div class="step">
+              <div class="step-num">01</div>
+              <div class="step-title">Roadmap & backlog</div>
+              <div class="step-desc">Built 120+ user stories with RICE and MoSCoW prioritization. Aligned quarterly OKRs across engineering, data science, UX, and crew ops.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">02</div>
+              <div class="step-title">Model success criteria</div>
+              <div class="step-desc">Defined prediction accuracy thresholds, false positive rates, and sub-300ms latency SLAs with data science teams for the SageMaker deployment.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">03</div>
+              <div class="step-title">A/B experimentation</div>
+              <div class="step-desc">Designed hypothesis and statistical significance thresholds for model variants. Determined which reserve allocation recommendations advanced to full rollout.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">04</div>
+              <div class="step-title">Go-to-market & launch</div>
+              <div class="step-desc">Delivered release plan coordinating training, internal comms, and ops readiness — achieving business sign-off 4 weeks ahead of scheduled go-live.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Outcomes -->
+        <div class="cs-outcomes">
+          <div class="outcome-item">
+            <div class="outcome-num">$1M</div>
+            <div class="outcome-desc">
+              <strong>FY2025 cost savings</strong>
+              Directly attributable to ML accuracy improvements and crew ops workflow iterations
+            </div>
+          </div>
+          <div class="outcome-item">
+            <div class="outcome-num">41→67%</div>
+            <div class="outcome-desc">
+              <strong>Reserve coverage improvement</strong>
+              Achieved within 2 quarters of launch across bid period cycles
+            </div>
+          </div>
+          <div class="outcome-item">
+            <div class="outcome-num">28%</div>
+            <div class="outcome-desc">
+              <strong>Reduction in premium activations</strong>
+              Green Slip premium pilot activations post-launch via PRD-defined decision workflows
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+  <div class="section-inner">
+    <div class="section-label fade-in">Capabilities</div>
+    <h2 class="section-title fade-in">What I bring<br>to the table</h2>
+
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>AI Product Management</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6;">Owning ML product roadmaps end-to-end — from model success criteria and A/B experimentation strategy to deployment lifecycle and stakeholder alignment.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Roadmap ownership</span>
+          <span class="skill-tag">RICE / MoSCoW</span>
+          <span class="skill-tag">A/B testing</span>
+          <span class="skill-tag">AWS SageMaker</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-in" style="transition-delay:0.1s;">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <h3>Business Analysis</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6;">Translating complex enterprise processes into structured requirements — BRDs, FRDs, AS-IS/TO-BE flows, gap analysis, and UAT coordination across large stakeholder groups.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">BRD / FRD</span>
+          <span class="skill-tag">Process mapping</span>
+          <span class="skill-tag">Root cause analysis</span>
+          <span class="skill-tag">UAT</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-in" style="transition-delay:0.2s;">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Data & Analytics</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.6;">SQL-based analysis, Power BI and Tableau dashboard design, Azure Synapse and GCP BigQuery — turning raw operational data into decisions that move the needle.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">Azure Synapse</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label fade-in">Career</div>
+    <h2 class="section-title fade-in">Experience</h2>
+
+    <div class="timeline fade-in">
+      <div class="timeline-item">
+        <div class="tl-period">Apr 2025 – Present</div>
+        <div class="tl-role">AI Product Manager & Product Owner</div>
+        <div class="tl-company">Delta Air Lines</div>
+        <div class="tl-desc">Led AI product vision and roadmap for Reserve Pilot Demand Prediction platform. Delivered $1M in FY2025 cost savings and improved next-day reserve coverage from 41% to 67% within 2 quarters.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-period">Feb 2023 – Mar 2025</div>
+        <div class="tl-role">Senior Business Analyst</div>
+        <div class="tl-company">Aetna</div>
+        <div class="tl-desc">Led claims processing modernization handling 3.2M+ monthly claims on Azure. Reduced claims rejection rate from 22% to 9% in 60 days. Uncovered $4.2M in billing discrepancies via SQL audit. Cut processing cycle time by 38%.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-period">Jul 2020 – Jul 2021</div>
+        <div class="tl-role">Business Analyst</div>
+        <div class="tl-company">Bank of America</div>
+        <div class="tl-desc">Mapped AS-IS workflows across 6 teams serving 14M+ customers on GCP BigQuery. Built Tableau dashboards across 400+ branch locations. Reduced manual regulatory report preparation by 41%.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-period">Jan 2019 – Jun 2020</div>
+        <div class="tl-role">Junior Business Analyst</div>
+        <div class="tl-company">Amazon</div>
+        <div class="tl-desc">Supported requirements gathering across 50,000+ seller accounts. Validated 4.2M+ historical order records in Redshift migration. Built Excel reporting templates reducing manual prep time by 35%.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-inner">
+    <div class="section-label">Let's connect</div>
+    <h2 class="section-title">Open to Senior BA<br>and Product Owner roles</h2>
+    <p class="contact-desc">6+ years across aviation, healthcare, and banking. Certified Scrum Product Owner. MS in Computer Science, University of North Texas.</p>
+    <div class="contact-links">
+      <a href="mailto:rithvika1606@gmail.com" class="contact-link primary">rithvika1606@gmail.com</a>
+      <a href="http://www.linkedin.com/in/rithvika-reddy-nalla" class="contact-link" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
